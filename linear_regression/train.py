@@ -14,13 +14,22 @@ def step_gradient(x, y, b, m, lr):
 
 
 def gradient_descent(x, y, b, m, lr, iterations, print_step=10):
-
+    errors = []
+    plt.scatter(x, y)
     for iteration in xrange(iterations):
         b, m = step_gradient(x, y, b, m, lr)
-        plt.plot(x, m * x + b, color=str(iteration / iterations))
 
+        plt.plot(x, m * x + b, color=str(iteration / iterations))
+        current_error = error(x, y, m, b)
+
+        errors.append(current_error)
         if not iteration % print_step:
-            print "Current Error at step=%s : %s" % (iteration, error(x, y, m, b))
+            print "Current Error at step=%s : %s" % (iteration, current_error)
+
+    plt.show()
+
+    plt.plot(range(iterations), errors)
+    plt.show()
 
     return b, m
 
@@ -40,14 +49,13 @@ def main():
     points = frame.as_matrix()
     x = points[:, 0]
     y = points[:, 1]
-    plt.scatter(x, y)
+
 
     b, m = gradient_descent(x, y, INIT_B, INIT_M, LEARNING_RATE, MAX_ITERATIONS)
     print b, m
 
 
-    plt.plot(x, m * x + b, color='1')
-    plt.show()
+
 
 
 if __name__ == "__main__":
