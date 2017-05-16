@@ -213,7 +213,7 @@ def test_process_decoding_input(process_decoding_input):
     with tf.Graph().as_default():
         target_data = tf.placeholder(tf.int32, [batch_size, seq_length])
         dec_input = process_decoding_input(target_data, target_vocab_to_int, batch_size)
-
+        
         assert dec_input.get_shape() == (batch_size, seq_length),\
             'Wrong shape returned.  Found {}'.format(dec_input.get_shape())
 
